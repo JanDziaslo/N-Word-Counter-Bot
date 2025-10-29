@@ -1,9 +1,12 @@
-# Minimalne zależności wymagane do uruchomienia bota
-py-cord==2.4.1
-discord-ext-pages
-aiohttp==3.8.4
-Pillow==10.0.0
-typing-extensions==4.9.0
+# Discord bot framework (zawiera discord.ext.pages)
+py-cord>=2.6.1
 
-# (Opcjonalnie, tylko do testów/developmentu)
-# pymongo==4.4.0  # obecne tylko w przestarzałych testach (test_pymongo_queries.py)
+# HTTP client używany przez py-cord i w utils/discord.py
+aiohttp>=3.8.4
+
+# Przetwarzanie obrazów (utils/discord.py - generowanie kolorów z awatarów)
+Pillow>=10.0.0
+
+# Zależności dla testów (opcjonalne)
+pytest>=8.0.0
+pytest-asyncio>=0.21.0
