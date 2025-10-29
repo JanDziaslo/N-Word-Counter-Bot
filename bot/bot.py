@@ -32,7 +32,7 @@ intents.presences = False
 
 bot = discord.Bot(
     intents=intents,
-    owner_ids=[354783154126716938, 691896247052927006, 234248229426823168, 454696684556124160]
+    owner_ids={354783154126716938, 691896247052927006, 234248229426823168, 454696684556124160}
 )
 
 # Logging (DEBUG clogs my stdout).
@@ -55,15 +55,22 @@ async def load_cogs():
     """Load all cogs"""
     for cog in cogs_to_load:
         try:
-            await bot.load_extension(cog)
+            bot.load_extension(cog)
             logger.info(f'Loaded {cog}')
         except Exception as e:
+            import traceback
             logger.error(f'Failed to load {cog}: {e}')
+            logger.error(traceback.format_exc())
 
 
 @bot.event
 async def on_ready():
     """Display successful startup status"""
+    # Load cogs on first ready event
+    if not hasattr(bot, '_cogs_loaded'):
+        await load_cogs()
+        bot._cogs_loaded = True
+
     logger.info(f"{bot.user.name} connected!")
     logger.info(f"Using Discord.py version {discord.__version__}")
     logger.info(f"Using Python version {platform.python_version()}")
@@ -98,6 +105,4 @@ async def ping(ctx: discord.ApplicationContext):
 
 
 if __name__ == "__main__":
-    import asyncio
-    asyncio.run(load_cogs())
     bot.run(TOKEN, reconnect=True)
