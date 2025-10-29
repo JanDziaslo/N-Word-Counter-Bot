@@ -69,51 +69,6 @@ class NWordCounter(commands.Cog):
             return 0
         return member["nword_count"]
 
-    def get_msg_response(self, nword_count: int) -> str:
-        """Return bot message response based on n-words said"""
-        msg = None
-        if nword_count < 5:
-            msg = random.choice(
-                [
-                    "Bro? :face_with_raised_eyebrow::camera_with_flash:",
-                    "??? :face_with_raised_eyebrow::camera_with_flash:",
-                    "CAUGHT :camera_with_flash:",
-                    "4K :camera_with_flash:",
-                    ":face_with_raised_eyebrow:"
-                ]
-            )
-        elif nword_count < 25:
-            msg = random.choice(
-                [
-                    "Bro chill with it :camera_with_flash:",
-                    "?????????? :camera_with_flash:",
-                    "Bro cmon :neutral_face:",
-                    "Bro..."
-                ]
-            )
-        elif nword_count < 100:
-            msg = random.choice(
-                ["Bro wtf :face_with_raised_eyebrow:", ":expressionless:",
-                 "CHILL",
-                 ":camera_with_flash::camera_with_flash::camera_with_flash:",
-                 "..."])
-        else:
-            msg = random.choice(
-                [
-                    "I have no words.",
-                    "Tf?",
-                    ":exploding_head:",
-                    ":flushed:",
-                    "I'm calling your employer",
-                    "This gotta affect your credit score somehow",
-                    "Quit this madness",
-                    "Bro you ARE the n-word pass",
-                    ":farmer:"
-                ]
-            )
-
-        return msg
-
     @commands.Cog.listener()
     async def on_message(self, message):
         """Detect n-words"""
@@ -172,17 +127,6 @@ class NWordCounter(commands.Cog):
         # Mitigate ratelimiting, usually this amount is just spam.
         if num_nwords >= 50:
             return
-
-        # CAUGHT in 4k.
-        response = self.get_msg_response(nword_count=num_nwords)
-
-        # Commented out for now as guild settings list doesn't have a
-        # send_message by default, making the bot unable to send a message
-        # anywhere on a server. To be fixed later.
-        # if has_message_perms and guild_settings["send_message"]["value"]:
-
-        if has_message_perms:
-            await message.reply(f"{message.author.mention} {response}")
 
     def get_id_from_mention(self, mention: str) -> int:
         """Extract user ID from mention string"""
