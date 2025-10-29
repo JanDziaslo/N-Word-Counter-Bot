@@ -19,11 +19,11 @@ class Developer(discord.Cog):
             cog = interaction.data["values"][0]
             try:
                 if type == "load":
-                    bot.load_extension(f"{cog}")
+                    await bot.load_extension(f"{cog}")
                 elif type == "unload":
-                    bot.unload_extension(f"{cog}")
+                    await bot.unload_extension(f"{cog}")
                 else:
-                    bot.reload_extension(f"{cog}")
+                    await bot.reload_extension(f"{cog}")
             except Exception as e:
                 await interaction.edit_original_response(
                     content=f"Failed to {type} {cog}:\n{e}", view=None)

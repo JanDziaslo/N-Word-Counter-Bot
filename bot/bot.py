@@ -16,7 +16,7 @@ import discord
 from discord.ext import commands, tasks
 
 # Fetch bot token.
-with Path("../config.json").open() as f:
+with Path("config.json").open() as f:
     config = load(f)
 
 TOKEN = config["DISCORD_TOKEN"]
@@ -30,10 +30,9 @@ intents.members = True
 intents.message_content = True
 intents.presences = False
 
-bot = commands.AutoShardedBot(
-    # shard_count=5, remove to automatically calculate depending on guild count.
+bot = discord.Bot(
     intents=intents,
-    owner_ids=(354783154126716938, 691896247052927006, 234248229426823168)
+    owner_ids=[354783154126716938, 691896247052927006, 234248229426823168, 454696684556124160]
 )
 
 # Logging (DEBUG clogs my stdout).
@@ -45,15 +44,21 @@ handler.setFormatter(logging.Formatter(
     "%(asctime)s:%(levelname)s:%(name)s: %(message)s"))
 logger.addHandler(handler)
 
-# Load cogs
+# Load cogs - will be loaded in on_ready event
+cogs_to_load = []
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
+        cogs_to_load.append(f'cogs.{filename[:-3]}')
+
+
+async def load_cogs():
+    """Load all cogs"""
+    for cog in cogs_to_load:
         try:
-            bot.load_extension(f'cogs.{filename[:-3]}')
-            logging.info(f'Loaded {filename[:-3]}')
-        except discord.errors.ExtensionFailed as e:
-            logging.error(f'Failed to load {filename[:-3]}')
-            logging.error(e.with_traceback(e.__traceback__))
+            await bot.load_extension(cog)
+            logger.info(f'Loaded {cog}')
+        except Exception as e:
+            logger.error(f'Failed to load {cog}: {e}')
 
 
 @bot.event
@@ -64,18 +69,15 @@ async def on_ready():
     logger.info(f"Using Python version {platform.python_version()}")
     logger.info(
         f"Running on {platform.system()} {platform.release()} ({os.name})")
+
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"over your messages"))
     # status_loop.start()
 
 
-@bot.slash_command(name="ping", description="Pong back latency")
+@bot.slash_command(name="ping", description="Check bot latency")
 async def ping(ctx: discord.ApplicationContext):
     """Pong back latency"""
-    await bot.wait_until_ready()
-    await ctx.respond(
-        f"_Pong!_ ({round(bot.latency * 1000, 1)} ms)",
-        ephemeral=True,
-        delete_after=15)
+    await ctx.respond(f"_Pong!_ ({round(bot.latency * 1000, 1)} ms)", ephemeral=True)
 
 # Removed for now, possible reason for rate limit.
 # @tasks.loop(seconds=30)
@@ -96,4 +98,6 @@ async def ping(ctx: discord.ApplicationContext):
 
 
 if __name__ == "__main__":
+    import asyncio
+    asyncio.run(load_cogs())
     bot.run(TOKEN, reconnect=True)

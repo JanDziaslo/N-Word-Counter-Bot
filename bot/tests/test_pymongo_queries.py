@@ -1,5 +1,8 @@
 """Unit test pymongo queries with nested documents.
 
+⚠️ DEPRECATED: This file is outdated. The bot now uses JSON file-based database instead of MongoDB.
+Use this file as a reference only if you want to understand the old MongoDB queries.
+
 USAGE: cd bot, then py -m tests.test_pymongo_queries
 
 - MAYBE: use mongomock instead for testing collection objects
