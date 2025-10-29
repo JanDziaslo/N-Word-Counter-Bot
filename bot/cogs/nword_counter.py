@@ -12,7 +12,9 @@ NWORDS_LIST = [
     (chr(110) + chr(105) + chr(103) + chr(103) + chr(97)),
     (chr(47) + chr(92) + chr(47) + chr(105) + chr(103) + chr(103) + chr(97)),
     (chr(124) + chr(92) + chr(47) + chr(105) + chr(103) + chr(103) + chr(97)),
-    (chr(109) + chr(117) + chr(114) + chr(122) + chr(121) + chr(110))
+    (chr(109) + chr(117) + chr(114) + chr(122) + chr(121) + chr(110)),
+    (chr(99) + chr(122) + chr(97) + chr(114) + chr(110) + chr(117) + chr(99) + chr(104)),
+    (chr(99) + chr(122) + chr(97) + chr(114) + chr(110) + chr(117) + chr(104))
 ]
 HARD_RS_LIST = [
     (chr(110) + chr(105) + chr(103) + chr(103) + chr(101) + chr(114)),
