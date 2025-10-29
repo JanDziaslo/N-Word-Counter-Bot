@@ -1,6 +1,5 @@
 """Cog for n-word counting and storing logic"""
 import re
-import random
 import string
 import discord
 from discord import option
