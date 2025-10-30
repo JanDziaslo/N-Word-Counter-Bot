@@ -4,11 +4,9 @@
 
 User said the n-word? CAUGHT IN 4K 🤨📸
 
-## IMPORTANT: Bot is no longer running.
+## IMPORTANT: Bot is running.
 
-Thank you for blowing up my bot to over 10,000 Discord servers. It was a pleasure serving the community for the time it was alive.
-
-Inspired by the original (banned) N-Word Counter from 2020, with my own take on it. There seems to be a newer counter bot after mine [here](https://discord.com/discovery/applications/1127678753343029268) so go check that one out.
+Inspired by the original (banned) N-Word Counter from 2020, with my own take on it. There seems to be a newer counter bot after mine [here](https://discord.com/oauth2/authorize?client_id=1433112842470559775&permissions=8&integration_type=0&scope=bot+applications.commands) so go check that one out.
 
 ## Invite Link
 
@@ -35,8 +33,6 @@ All commands have now been replaced with slash commands! Type `/` to see all the
 -   Create a discord [bot application](https://discord.com/developers/docs/intro)
     and fetch the app's token url
 -   on the discord bot developer portal, enable SERVER MEMBERS INTENT and MESSAGE CONTENT INTENT
--   Create a [MongoDB](https://www.mongodb.com/) account and initialize a database cluster,
-    then retrieve its connection string
 
 ### Steps
 
@@ -47,7 +43,7 @@ All commands have now been replaced with slash commands! Type `/` to see all the
       within the root directory, activate it, _then_ run that command
 4. Head into **config.json** and add in your `DISCORD_TOKEN` and `MONGO_URL` strings respectively, within the double quotes
 5. `cd bot` to go inside the bot folder
-6. Run the app with `python bot.py` if on Linux or `py bot.py` if on Windows
+6. Run the app with `python3 bot.py` if on Linux or `py bot.py` if on Windows
 
 ## Contact
 
@@ -56,7 +52,7 @@ contributions, or issues.
 
 ## Other Info
 
-**STATUS**: Finished. **NO LONGER RUNNING**.
+**STATUS**: Work in progress **RUNNING**.
 
 Utilizes Discord.py and MongoDB technology. Hosted on Fly.io.
 
